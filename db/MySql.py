@@ -167,7 +167,7 @@ class Database:
         self.connection.ping()
         with self.connection.cursor() as cursor:
             cursor.execute(
-                """SELECT id, telegram_id, username, full_name, has_acces
+                """SELECT id, telegram_id, username, full_name, has_acces,role
                 FROM Users
                 WHERE telegram_id=%s""", (telegram_id,))
             res = cursor.fetchone()
