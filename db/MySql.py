@@ -18,12 +18,13 @@ class Database:
 
     def cbdt(self):
         with self.connection.cursor() as cursor:
-            create = """CREATE TABLE IF NOT EXISTS Users
+            create = """CREATE TABLE IF NOT EXISTS users
                         (id INT PRIMARY KEY AUTO_INCREMENT,
                         telegram_id BIGINT UNIQUE NOT NULL ,
                         full_name TEXT,
                         username TEXT,
-                        has_acces BOOL DEFAULT false
+                        has_acces BOOL DEFAULT false,
+                        role TEXT DEFAULT 'USER'
                         );"""
             cursor.execute(create)
             self.connection.commit()

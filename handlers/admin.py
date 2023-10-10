@@ -15,6 +15,9 @@ async def admin(message: types.Message):
     db: Database = ctx_data.get()['db']
     markup = await kb.admin_kb()
 
+    if db.get_user(message.from_user.id).role != "ADMIN":
+        return
+
     await message.answer("Выберите пункт меню", reply_markup=markup)
 
 
