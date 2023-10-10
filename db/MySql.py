@@ -18,7 +18,7 @@ class Database:
 
     def cbdt(self):
         with self.connection.cursor() as cursor:
-            create = """CREATE TABLE IF NOT EXISTS users
+            create = """CREATE TABLE IF NOT EXISTS Users
                         (id INT PRIMARY KEY AUTO_INCREMENT,
                         telegram_id BIGINT UNIQUE NOT NULL ,
                         full_name TEXT,
