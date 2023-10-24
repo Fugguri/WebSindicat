@@ -37,7 +37,8 @@ async def commands(callback: types.CallbackQuery, state: FSMContext, callback_da
         text = await create_text.create_statistic(db)
 
     await callback.message.answer(text, reply_markup=markup)
-    await callback.message.delete()
+    # await callback.message.delete()
+
 
 
 async def wait_mail_text(message: types.Message, state: FSMContext):
@@ -49,7 +50,7 @@ async def wait_mail_text(message: types.Message, state: FSMContext):
     await state.update_data(mail_text=message.text)
     await message.answer("Отправьте изображение для рассылки.\nЕсли изображения не будет нажмите кнопку ниже.", reply_markup=markup)
     await state.set_state("wait_mail_photo")
-    await message.delete()
+    # await message.delete()
 
 
 async def wait_mail_photo(message: types.Message, state: FSMContext):
@@ -99,7 +100,7 @@ async def mailing(calaback: types.CallbackQuery, state: FSMContext, callback_dat
             print(ex)
         finally:
             text = "Разослано"
-            await mes.delete()
+            # await mes.delete()
 
     if command == "start":
         markup = await kb.mailing_kb()
@@ -109,12 +110,15 @@ async def mailing(calaback: types.CallbackQuery, state: FSMContext, callback_dat
             users = db.get_all_users()
             mail_text = data['mail_text']
             for user in users:
-                await bot.send_message(chat_id=user.user_id, text=mail_text)
+                try:
+                    await bot.send_message(chat_id=user.user_id, text=mail_text)
+                except Exception as ex:
+                    print(ex)
         except Exception as ex:
             print(ex)
         finally:
             text = "Разослано"
-            await mes.delete()
+            # await mes.delete()
 
     await calaback.message.answer(text, reply_markup=markup)
 
